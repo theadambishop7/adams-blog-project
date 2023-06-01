@@ -122,7 +122,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         login_user(new_user)
-        return redirect("/")
+        return redirect(url_for('get_all_posts'))
     return render_template("register.html", form=form)
 
 
@@ -136,10 +136,10 @@ def login():
             if check_password_hash(pwhash=user.password, password=password_entry):
                 login_user(user)
                 flash("Login Successful")
-                return redirect("/")
+                return redirect(url_for('get_all_posts'))
             else:
                 flash("Password Incorrect, please try again.")
-                return redirect("/login")
+                return redirect(url_for('login'))
     return render_template("login.html", form=form)
 
 
