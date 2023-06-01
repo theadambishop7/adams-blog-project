@@ -82,7 +82,6 @@ class Comment(db.Model):
     commenter = relationship("User", back_populates="comments")
     post_id = db.Column(db.Integer, db.ForeignKey("blog_posts.id"))
     parent_post = relationship("BlogPost", back_populates="comments")
-db.create_all()
 
 
 def admin_only(f):
