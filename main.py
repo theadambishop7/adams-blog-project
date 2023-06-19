@@ -101,7 +101,7 @@ def inject_now():
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(user_id)
+    return db.session.get(User, user_id)
 
 
 @app.route('/')
@@ -162,7 +162,7 @@ def show_post(post_id):
         db.session.add(new_comment)
         db.session.commit()
         return redirect(url_for("show_post", post_id=post_id))
-    requested_post = BlogPost.query.get(post_id)
+    requested_post = db.session.get(BlogPost, post_id)
     return render_template("post.html", post=requested_post, form=form, comments=comments)
 
 
@@ -198,7 +198,7 @@ def add_new_post():
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 @admin_only
 def edit_post(post_id):
-    post = BlogPost.query.get(post_id)
+    post = db.session.get(BlogPost, post_id)
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
